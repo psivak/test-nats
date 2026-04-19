@@ -21,6 +21,12 @@ dev-dependencies = [
     "pytest",
     "ruff",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+python_classes = ["Test*"]
 ```
 
 ## ruff.toml Template

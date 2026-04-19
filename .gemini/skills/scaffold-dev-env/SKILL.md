@@ -24,7 +24,8 @@ This skill automates the creation of a professional-grade, multi-container devel
   - **Persistence:** Docker volumes for persistent data.
   - **Secrets:** Use `.env` file; never hardcode passwords.
 - **Dev Container:** Generate `.devcontainer/devcontainer.json` with:
-  - VS Code extensions relevant to the language.
+  - VS Code extensions: Python, Pylance, Ruff, Docker (including Compose support), and REST Client.
+  - Settings to enable **pytest** in the VS Code testing window.
   - Port forwarding for all services.
   - Lifecycle hooks (`postCreateCommand`) to install dependencies.
 
