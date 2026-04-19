@@ -17,7 +17,9 @@ This skill automates the creation of a professional-grade, multi-container devel
 - **External Tech:** Identify required external services (e.g., PostgreSQL, Redis) from user request or app needs.
 
 ### 2. Environment Configuration
-- **Python Stack:** If Python is used, always use **astral-uv** for dependency management and **ruff** for linting/formatting.
+- **Python Stack:** If Python is used:
+  - Always use **Microsoft's official Python Dev Container image** (`mcr.microsoft.com/devcontainers/python`).
+  - Use **astral-uv** for dependency management and **ruff** for linting/formatting.
 - **Docker Compose:** Generate `docker-compose.yml` with:
   - App service (pointing to `.devcontainer/Dockerfile`).
   - External service containers with **healthchecks**.
@@ -32,6 +34,7 @@ This skill automates the creation of a professional-grade, multi-container devel
 ### 3. Automation & Validation
 - **GitHub Actions:** Generate `.github/workflows/test.yml` using the same `docker-compose.yml`.
 - **Reset Script:** Generate a Python `reset.py` script to safely teardown (including volumes) and rebuild the environment.
+- **Test Documentation:** Generate `tests/README.md` documenting each generated test's concept, method, and considerations.
 - **API Testing:** Generate `.vscode/api.http` for testing endpoints.
 - **Init Scripts:** If the user describes a schema or initial state, generate Python-based initialization scripts.
 
@@ -55,5 +58,6 @@ Before finishing, you MUST verify:
 2. Healthchecks pass for external services.
 3. `.env` file is generated and ignored in `.gitignore`.
 4. Dev Container extensions and settings are configured.
-5. **pytest** runs successfully within the container (e.g., `docker compose exec -T app pytest`).
-6. **Teardown:** `docker compose down -v` successfully removes all containers and volumes.
+5. **pytest** runs successfully within the container.
+6. **Test Documentation:** `tests/README.md` is generated and includes details about concepts, methods, and considerations for all generated tests.
+7. **Teardown:** `docker compose down -v` successfully removes all containers and volumes.

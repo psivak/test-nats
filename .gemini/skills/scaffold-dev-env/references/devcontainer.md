@@ -37,8 +37,9 @@
 ```
 
 ## Dockerfile Template (Python)
+# Uses official Microsoft Dev Container image for Python
 ```dockerfile
-FROM mcr.microsoft.com/devcontainers/python:1-3.12-bullseye
+FROM mcr.microsoft.com/devcontainers/python:1-3.12-bookworm
 
 # Install astral-uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh

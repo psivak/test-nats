@@ -82,6 +82,23 @@ docker compose down -v
 echo "Validation complete and environment cleaned."
 ```
 
+## Test Documentation Template (tests/README.md)
+```markdown
+# Test Documentation
+
+## Overview
+This file documents the tests in this project, explaining the concepts, methods, and considerations for each test.
+
+## Generated Tests
+
+### [Test Name, e.g., tests/test_health.py]
+- **Concept:** [What concept is this test showing? (e.g., API health, DB connectivity)]
+- **Method:** [Brief description of how it is tested (e.g., Sends GET request to /health and checks for 200 OK)]
+- **Considerations:** [Other considerations (e.g., Requires app container to be running, uses requests library)]
+
+### [Next Test Name...]
+```
+
 ## API Testing (.vscode/api.http)
 ```http
 ### Get Health
