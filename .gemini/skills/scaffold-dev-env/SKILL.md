@@ -35,6 +35,11 @@ This skill automates the creation of a professional-grade, multi-container devel
 - **API Testing:** Generate `.vscode/api.http` for testing endpoints.
 - **Init Scripts:** If the user describes a schema or initial state, generate Python-based initialization scripts.
 
+### 4. Test & Teardown
+- **Automated Validation:** After scaffolding, perform a complete "Start -> Test -> Teardown" cycle.
+- **pytest:** Ensure a baseline `tests/test_health.py` is created to verify API connectivity.
+- **Cleanup:** Always stop and remove the environment after validation to leave the host system clean.
+
 ## Templates & Guidelines
 
 Refer to these files for specific implementation details:
@@ -45,9 +50,10 @@ Refer to these files for specific implementation details:
 - **Init & Secrets:** [references/init-scripts.md](references/init-scripts.md)
 
 ## Validation Checklist
-Before finishing, ensure:
-1. `docker compose up` starts all containers.
+Before finishing, you MUST verify:
+1. `docker compose up -d --build` starts all containers without errors.
 2. Healthchecks pass for external services.
 3. `.env` file is generated and ignored in `.gitignore`.
 4. Dev Container extensions and settings are configured.
-5. `reset.py` works as intended.
+5. **pytest** runs successfully within the container (e.g., `docker compose exec -T app pytest`).
+6. **Teardown:** `docker compose down -v` successfully removes all containers and volumes.

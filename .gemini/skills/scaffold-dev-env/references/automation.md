@@ -42,11 +42,44 @@ def run(cmd):
 def reset():
     print("Resetting dev environment...")
     run("docker compose down -v") # -v removes volumes
-    run("docker compose up -d")
+    run("docker compose up -d --build")
     print("Environment reset and fresh seed data applied (if init scripts exist).")
 
 if __name__ == "__main__":
     reset()
+```
+
+## Baseline Test (tests/test_health.py)
+```python
+import requests
+import time
+import pytest
+
+def test_app_health():
+    # Wait for the app to be ready if needed
+    for i in range(10):
+        try:
+            response = requests.get("http://app:8000/health")
+            if response.status_code == 200:
+                assert response.json()["status"] == "ok"
+                return
+        except requests.exceptions.ConnectionError:
+            time.sleep(2)
+    pytest.fail("App failed to respond within 20 seconds")
+```
+
+## Local Validation Script (validate.sh)
+Useful for manual checks or as a `postCreateCommand` for extra verification.
+```bash
+#!/bin/bash
+set -e
+echo "Starting validation..."
+docker compose up -d --build
+echo "Running tests..."
+docker compose exec -T app pytest tests/
+echo "Teardown..."
+docker compose down -v
+echo "Validation complete and environment cleaned."
 ```
 
 ## API Testing (.vscode/api.http)
