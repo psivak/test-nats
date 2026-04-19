@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - .:/workspaces/test-nats:cached
+    network_mode: service:nats
+    command: sleep infinity
+    depends_on:
+      nats:
+        condition: service_healthy
+
+  nats:
+    image: nats:latest
+    command: ["-js"]
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    healthcheck:
+      test: ["CMD", "nats-server", "--check", "4222"]
+      interval: 5s
+      timeout: 5s
+      retries: 5

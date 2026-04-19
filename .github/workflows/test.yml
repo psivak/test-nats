@@ -1,0 +1,27 @@
+name: Test NATS Concepts
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+        
+      - name: Start Environment
+        run: docker compose up -d --build
+        
+      - name: Run Tests
+        run: |
+          docker compose exec -T app uv run pytest
+          
+      - name: Teardown
+        if: always()
+        run: docker compose down -v
